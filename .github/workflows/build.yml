@@ -15,7 +15,6 @@ jobs:
         run: |
           sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost
           sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-          sudo rm -rf /usr/local/lib/android/sdk/ndk
           sudo apt-get clean
           df -h
 
@@ -34,6 +33,7 @@ jobs:
       - name: Build APK
         run: |
           set -o pipefail
+          export PYTHON_FOR_ANDROID__HOSTPYTHON_VERSION=3.11.5
           yes | buildozer -v android debug 2>&1 | tee build.log
 
       - name: Show last lines if build failed
