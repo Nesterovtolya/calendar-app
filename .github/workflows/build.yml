@@ -31,7 +31,8 @@ jobs:
 
       - name: Build
         run: |
-          yes | buildozer -v android debug 2>&1 | tail -150
+          set -o pipefail
+          yes | buildozer -v android debug
 
       - name: Upload APK
         if: always()
@@ -39,3 +40,4 @@ jobs:
         with:
           name: apk
           path: bin/*.apk
+          if-no-files-found: error
